@@ -1,0 +1,41 @@
+<a routerLink="/userslist" class="text-white">
+<button class="btn btn-primary  my-2">
+        <mat-icon> keyboard_backspace</mat-icon>
+    </button>
+</a>    
+
+<section class="row justify-content-center mt-4 ">
+        <div class="col-lg-4 col-md-6 col-10 card text-center">
+            <div style="background-color: var(--second-main-bg-color);" class="card-img rounded-bottom-0 p-5 mt-3">
+                <img [src]="user?.avatar" class="rounded-circle" alt="">
+            </div>
+                
+            <div class="card-body mb-3 rounded-bottom-2 bg-primary">
+            
+                <p class="d-flex align-items-start justify-content-center gap-2" >
+                    <mat-icon> account_box </mat-icon>
+                    <small class="mt-1">
+                        {{user?.id}}
+                    </small>
+                </p>
+                <p class="d-flex align-items-start  justify-content-center gap-2" >
+                    <mat-icon> person </mat-icon>
+                    <small class="mt-1">
+                        {{user?.first_name}}
+                        {{user?.last_name}} 
+                    </small>
+                </p>
+
+                <p class="d-flex align-items-start justify-content-center gap-2" >
+                    <mat-icon> email </mat-icon>
+                    <small class="mt-1">
+                        {{user?.email}}
+                    </small>
+                </p>
+            
+            
+        </div>
+            
+        </div>
+
+    </section>

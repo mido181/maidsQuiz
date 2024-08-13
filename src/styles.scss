@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&family=Readex+Pro:wght@160..700&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Radio Canada Big", sans-serif;
+    text-decoration: none !important;
+    color: white;
+    
+}
+
+
+:root{
+--main-bg-color: #4e7ab5;
+--second-main-bg-color: #ffd615;
+--third-main-bg-color: #f3f4f6;
+--card-height: 300px;
+--card-width: calc(var(--card-height) / 1.5);
+
+}
+html,body {
+    background-color: var(--third-main-bg-color);
+}

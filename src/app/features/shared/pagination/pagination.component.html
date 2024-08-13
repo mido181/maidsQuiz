@@ -1,0 +1,17 @@
+<nav aria-label="...">
+  <ul class="pagination">
+    <li  (click)="Previous()" class="page-item" [ngClass]="{'disabled':indecator == 0}">
+      <a  class="page-link">Previous</a>
+    </li>
+
+    @for (item of pages ;track item ; let index = $index) {
+    <li class="page-item" (click)="indecator = index " [ngClass]="{'active':indecator == index}" aria-current="page" >
+      <a class="page-link"  (click)="getPaignationData(item)" >{{index+1}}</a>
+    </li>
+  }
+    <li (click)="next()" class="page-item" [ngClass]="{'disabled':indecator == this.usersResponse?.total_pages!-1}">
+      <a  class="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
+

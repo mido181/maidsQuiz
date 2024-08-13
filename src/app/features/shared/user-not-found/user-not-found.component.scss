@@ -1,0 +1,15 @@
+.card{
+    height: 170px ;
+    transition: all .6s ease-in-out;
+    overflow: hidden;
+    background-color:var(--main-bg-color);
+    color: white !important;
+  }
+
+
+  .card:hover{
+    height: 300px ;
+    background-color:rgb(206, 58, 58);
+
+  }
+  
