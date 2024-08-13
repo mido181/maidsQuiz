@@ -4,7 +4,6 @@ import { CommonModule, SlicePipe } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { CacheService } from '../../../services/cache.service';
 
 @Component({
   selector: 'app-pagination',
@@ -24,14 +23,14 @@ export class PaginationComponent implements OnInit ,OnDestroy {
  @Output()
  users = new EventEmitter<UsersResponse<Iuser[]>>();
 
-  constructor(private userService:UserService,private cache:CacheService){} 
+  constructor(private userService:UserService){} 
 
   ngOnInit(): void {
     this.getUsersPagination()
   }
   
   getUsersPagination(){
-  this.userService.UsersPagination(this.pagination_url).subscribe(res=>{
+  this.userService.UsersPagination(this.pagination_url).pipe(takeUntil(this.$subject)).subscribe(res=>{
    this.usersResponse =  res 
     this.pages_url()
   } 
@@ -48,7 +47,7 @@ export class PaginationComponent implements OnInit ,OnDestroy {
   }
     
   getPaignationData(item:string){
-    this.userService.UsersPagination(item).subscribe(res=> this.users.emit(res))
+    this.userService.UsersPagination(item).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
   }
 
 
@@ -58,7 +57,7 @@ export class PaginationComponent implements OnInit ,OnDestroy {
     }else{
       this.indecator = this.indecator - 1
     }
-    this.userService.UsersPagination(this.pages[this.indecator]).subscribe(res=> this.users.emit(res))
+    this.userService.UsersPagination(this.pages[this.indecator]).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
   }
 
   next(){
@@ -67,7 +66,7 @@ export class PaginationComponent implements OnInit ,OnDestroy {
     }else{
       this.indecator = this.indecator + 1
       }
-      this.userService.UsersPagination(this.pages[this.indecator]).subscribe(res=> this.users.emit(res))
+      this.userService.UsersPagination(this.pages[this.indecator]).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
   
   
     }

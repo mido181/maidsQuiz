@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Iuser } from '../../../../app/interfaces/user-response.interface';
 import { UserService } from '../../../../app/services/user.service';
 import {MatIcon} from '@angular/material/icon';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-details',
@@ -11,8 +12,9 @@ import {MatIcon} from '@angular/material/icon';
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })
-export class UserDetailsComponent  implements OnInit {
+export class UserDetailsComponent  implements OnInit ,OnDestroy {
   user!:Iuser
+  $subject = new Subject<boolean>()
     constructor(
       private userService:UserService,
       private route:ActivatedRoute){}
@@ -20,14 +22,19 @@ export class UserDetailsComponent  implements OnInit {
     ngOnInit(): void { this.getId() }
 
     getId(){
-      this.route.params.subscribe(res=> this.getUserById(res['id']))
+      this.route.params.pipe(takeUntil(this.$subject)).subscribe(res=> this.getUserById(res['id']))
     }
   
     getUserById(id:string){
 
-     this.userService.getUserById(id).subscribe(res => this.user = res.data )
+     this.userService.getUserById(id).pipe(takeUntil(this.$subject)).subscribe(res => this.user = res.data )
 
     }
   
+    ngOnDestroy(): void {
+      this.$subject.next(false)
+      this.$subject.unsubscribe()
+   
+    }
   }
   

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../app/services/user.service';
 import { Iuser, UsersResponse } from '../../../../app/interfaces/user-response.interface';
-import { AsyncPipe, JsonPipe } from '@angular/common';
-import {  Observable, Subject, takeUntil, tap } from 'rxjs';
+import {  Subject, takeUntil} from 'rxjs';
 import { IUserComponent } from "../i-user/i-user.component";
 import { PaginationComponent } from "../../shared/pagination/pagination.component";
 import { UserNotFoundComponent } from "../../shared/user-not-found/user-not-found.component";
@@ -37,7 +36,7 @@ export class UserListComponent implements OnInit , OnDestroy {
         )}
 
   getUsers(){
-    this.userService.allUsers().subscribe(res=>{
+    this.userService.allUsers().pipe(takeUntil(this.$subject)).subscribe(res=>{
       this.usersResponse = res
       this.users = this.usersResponse?.data
       })
@@ -63,8 +62,8 @@ export class UserListComponent implements OnInit , OnDestroy {
 
 
   ngOnDestroy(): void {
-    // this.$subject.next(false)
-    // this.$subject.unsubscribe()
+    this.$subject.next(false)
+    this.$subject.unsubscribe()
   }
 
 }
