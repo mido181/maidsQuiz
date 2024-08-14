@@ -16,7 +16,7 @@ import { QuaryParamService } from './quary-param.service';
     id = new BehaviorSubject<number|null>(null);
     private readonly BASE_URL = 'https://reqres.in/api/users';
  
-   constructor(private HTTP:HttpClient,private cacheService:CacheService, private getQuary:QuaryParamService) { }
+   constructor(private HTTP:HttpClient) { }
 
 
    allUsers(){

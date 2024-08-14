@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class UserDetailsComponent  implements OnInit ,OnDestroy {
   user!:Iuser
-  $subject = new Subject<boolean>()
+  subject$ = new Subject<boolean>()
     constructor(
       private userService:UserService,
       private route:ActivatedRoute){}
@@ -22,18 +22,16 @@ export class UserDetailsComponent  implements OnInit ,OnDestroy {
     ngOnInit(): void { this.getId() }
 
     getId(){
-      this.route.params.pipe(takeUntil(this.$subject)).subscribe(res=> this.getUserById(res['id']))
+      this.route.params.pipe(takeUntil(this.subject$)).subscribe(res=> this.getUserById(res['id']))
     }
   
     getUserById(id:string){
-
-     this.userService.getUserById(id).pipe(takeUntil(this.$subject)).subscribe(res => this.user = res.data )
-
+     this.userService.getUserById(id).pipe(takeUntil(this.subject$)).subscribe(res => this.user = res.data )
     }
   
     ngOnDestroy(): void {
-      this.$subject.next(false)
-      this.$subject.unsubscribe()
+      this.subject$.next(false)
+      this.subject$.unsubscribe()
    
     }
   }

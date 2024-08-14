@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit , OnDestroy {
   users!:Iuser[]
   usersResponse!:UsersResponse<Iuser[]>;
   user?:UsersResponse<Iuser[]>
-  $subject = new Subject<boolean>()  
+  subject$ = new Subject<boolean>()  
   constructor(
   private userService:UserService,
   private cache:CacheService
@@ -31,12 +31,12 @@ export class UserListComponent implements OnInit , OnDestroy {
     }
 
   getId(){  
-     this.userService.id.pipe(takeUntil(this.$subject)).subscribe(res=>
+     this.userService.id.pipe(takeUntil(this.subject$)).subscribe(res=>
        this.filterUsers(res),
         )}
 
   getUsers(){
-    this.userService.allUsers().pipe(takeUntil(this.$subject)).subscribe(res=>{
+    this.userService.allUsers().pipe(takeUntil(this.subject$)).subscribe(res=>{
       this.usersResponse = res
       this.users = this.usersResponse?.data
       })
@@ -62,8 +62,8 @@ export class UserListComponent implements OnInit , OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.$subject.next(false)
-    this.$subject.unsubscribe()
+    this.subject$.next(false)
+    this.subject$.unsubscribe()
   }
 
 }
