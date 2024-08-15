@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UserService } from '../../../../app/services/user.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import {  RouterLink } from '@angular/router';
 import { Iuser } from '../../../../app/interfaces/user-response.interface';
 import { CommonModule } from '@angular/common';
+import { PreloadimageDirective } from '../../../directive/preloadimage.directive';
 
 @Component({
   selector: 'app-i-user',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,PreloadimageDirective],
   templateUrl:'./i-user.component.html',
   styleUrl: './i-user.component.scss'
 })
