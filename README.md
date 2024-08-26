@@ -6,8 +6,8 @@
 <li>
   Developed a clean and user-friendly interface using HTML and CSS and Bootstrap.
 </li>
-<il>
+<li>
   I implemented a robust caching mechanism to optimize performance and reduce server load.
-</il>
+</li>
   
 </ul>
