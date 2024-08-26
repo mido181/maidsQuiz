@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../app/services/user.service';
 import { Iuser, UsersResponse } from '../../../../app/interfaces/user-response.interface';
-import {  Subject, takeUntil} from 'rxjs';
+import {  BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import { IUserComponent } from "../i-user/i-user.component";
 import { PaginationComponent } from "../../shared/pagination/pagination.component";
 import { UserNotFoundComponent } from "../../shared/user-not-found/user-not-found.component";
@@ -19,16 +19,21 @@ export class UserListComponent implements OnInit , OnDestroy {
   users!:Iuser[]
   usersResponse!:UsersResponse<Iuser[]>;
   user?:UsersResponse<Iuser[]>
-  subject$ = new Subject<boolean>()  
+  subject$ = new Subject<boolean>();  
+
   constructor(
   private userService:UserService,
-  private cache:CacheService
  ){}
-
-  ngOnInit(){
-      this.getUsers()
-      this.getId()
-    }
+ 
+ ngOnInit(){
+   this.getUsers()
+   this.getId()
+  this.hideSearchInput()
+  }
+  
+  hideSearchInput(){
+   this.userService.IsUserCompActive.next(true)
+   }
 
   getId(){  
      this.userService.id.pipe(takeUntil(this.subject$)).subscribe(res=>
@@ -60,10 +65,13 @@ export class UserListComponent implements OnInit , OnDestroy {
    this.users = user.data
   }
 
-
+  HideSearch(){
+      
+  }
   ngOnDestroy(): void {
     this.subject$.next(false)
     this.subject$.unsubscribe()
+    this.userService.IsUserCompActive.next(false)
   }
 
 }

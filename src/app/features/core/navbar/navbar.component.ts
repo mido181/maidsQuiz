@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { SearchfieldDirective } from '../../../directive/searchfield.directive';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -15,17 +16,25 @@ import { SearchfieldDirective } from '../../../directive/searchfield.directive';
 export class NavbarComponent implements OnInit {
   userlist = false;
   searchVal = false;
-  constructor( private userService:UserService,private route:Router ){}  
+  hideInput = new BehaviorSubject<boolean>(true);
+  constructor( private userService:UserService ){}  
 
   ngOnInit(): void {
+  this.hideSearchInput()
   }
+  hideSearchInput(){
+    this.hideInput = this.userService.IsUserCompActive
+  }
+
   showSearchfield(){
   this.searchVal = !this.searchVal
   }
 
-sendingId(id:string){
-this.userService.id.next(+id)
-}
+  sendingId(id:string){
+  this.userService.id.next(+id)
+  }
+
+
   
   }
 

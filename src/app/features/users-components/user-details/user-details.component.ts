@@ -4,11 +4,12 @@ import { Iuser } from '../../../../app/interfaces/user-response.interface';
 import { UserService } from '../../../../app/services/user.service';
 import {MatIcon} from '@angular/material/icon';
 import { Subject, takeUntil } from 'rxjs';
+import { PreloadimageDirective } from '../../../directive/preloadimage.directive';
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [MatIcon,RouterLink],
+  imports: [MatIcon,RouterLink,PreloadimageDirective],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })

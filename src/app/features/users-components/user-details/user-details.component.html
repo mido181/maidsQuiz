@@ -1,13 +1,17 @@
-<a routerLink="/userslist" class="text-white">
-<button class="btn btn-primary  my-2">
-        <mat-icon> keyboard_backspace</mat-icon>
-    </button>
-</a>    
+<div class="container">
+<div class="row mt-4">
+<div class="col-lg-1 col-12">
+    <a routerLink="/users" class="text-white">
+        <button class="btn btn-primary">
+            <mat-icon style="font-size: 28px;"> keyboard_backspace</mat-icon>
+        </button>
+    </a>    
+</div>
 
-<section class="row justify-content-center mt-4 ">
+<section class=" col-lg-11 col-12 row justify-content-center ">
         <div class="col-lg-4 col-md-6 col-10 card text-center">
-            <div style="background-color: var(--second-main-bg-color);" class="card-img rounded-bottom-0 p-5 mt-3">
-                <img [src]="user?.avatar" class="rounded-circle" alt="">
+            <div style="background-color: var(--second-main-bg-color);" class="card-img rounded-bottom-0 p-5 my-3">
+                <img appPreloadimage defult='https://via.placeholder.com/150' [src]="user?.avatar" class="rounded-circle" alt="">
             </div>
                 
             <div class="card-body mb-3 rounded-bottom-2 bg-primary">
@@ -39,3 +43,5 @@
         </div>
 
     </section>
+</div>
+</div>

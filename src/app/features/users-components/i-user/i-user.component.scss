@@ -1,13 +1,15 @@
   .card{
     height: 180px;
     transition: all .6s ease-in-out;
+    cursor: pointer;
   }
 
 
-  .card:hover{
-    height: 300px ;
+  .show:hover{
+    transition: all .6s ease-in-out;
     background-color:var(--second-main-bg-color) !important;
-
+    opacity: 1 !important ;
+    height: 100%;
   }
   
 //   .cover-image {

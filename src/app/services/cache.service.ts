@@ -6,13 +6,13 @@ import { Iuser, UsersResponse } from '../interfaces/user-response.interface';
   providedIn: 'root',
 })
 export class CacheService {
-  readonly cache = new Map<string, HttpResponse<unknown>>();
+  readonly cache = new Map<string, HttpResponse<any>>();
  
-  get(key: string): HttpResponse<unknown> | undefined { 
+  getCache(key: string): HttpResponse<any> | undefined { 
     return this.cache.get(key);
   }
 
-  set(key: string, value: HttpResponse<unknown>): void {
+  setCache(key: string, value: HttpResponse<any>): void {
       this.cache.set(key, value);
   }
 }

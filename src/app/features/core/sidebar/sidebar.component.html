@@ -1,0 +1,17 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary border">
+    <a routerLink="/userslist" class="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <span class="fs-4 text-black">Dashboard</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        @for (item of dashboard; track $index) {
+      <li>
+            <a [routerLink]="['/'+item]" routerLinkActive="active"  class="nav-link link-body-emphasis mt-2">
+                <mat-icon style="font-size: 16px; padding-top: 10px;" > person </mat-icon>
+                {{item}}
+            </a>
+        </li>
+    }
+    </ul>
+    <hr>
+  </div>

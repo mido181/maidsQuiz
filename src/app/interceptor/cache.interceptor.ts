@@ -5,17 +5,16 @@ import { inject } from '@angular/core';
 
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   const cache = inject(CacheService);
+  const cached = cache.getCache(req.url);
 
-  const cached = cache.get(req.url);
-
-  const isCacheClicked = cached !== undefined;
-  if (isCacheClicked) {
+  const isCached = cached !== undefined;
+  if (isCached) {
     return of(cached);
   }
 
   return next(req).pipe(tap((response) =>{
     if (response instanceof HttpResponse) {               
-      return cache.set(req.url, response)      
+      return cache.setCache(req.url, response)      
     }
   }
 ));
