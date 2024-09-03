@@ -21,11 +21,6 @@ import { QuaryParamService } from './quary-param.service';
     return this.HTTP.get<UsersResponse<Iuser[]>>(this.BASE_URL)
     }
 
-    UsersPagination(url:string){  
-     return this.HTTP.get<UsersResponse<Iuser[]>>(url)
-    }
-  
-
    getUserById(id:string){
     return this.HTTP.get<UsersResponse<Iuser>>(`${this.BASE_URL}/${+id}`)
   }

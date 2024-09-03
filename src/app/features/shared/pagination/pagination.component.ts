@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Iuser, UsersResponse } from '../../../interfaces/user-response.interface';
 import { CommonModule, SlicePipe } from '@angular/common';
-import { UserService } from '../../../services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { PaginationService } from '../../../services/pagination.service';
 
 @Component({
   selector: 'app-pagination',
@@ -23,15 +23,15 @@ export class PaginationComponent implements OnInit ,OnDestroy {
  @Output()
  users = new EventEmitter<UsersResponse<Iuser[]>>();
 
-  constructor(private userService:UserService){} 
+  constructor(private Pagination:PaginationService){} 
 
   ngOnInit(): void {
-    this.getUsersPagination()
+    this.getPagination()
   }
   
-  getUsersPagination(){
-  this.userService.UsersPagination(this.pagination_url).pipe(takeUntil(this.$subject)).subscribe(res=>{
-   this.usersResponse =  res 
+  getPagination(){
+  this.Pagination.getPaginationData(this.pagination_url).pipe(takeUntil(this.$subject)).subscribe(res=>{
+   this.usersResponse = res 
     this.pages_url()
   } 
 )
@@ -47,31 +47,42 @@ export class PaginationComponent implements OnInit ,OnDestroy {
   }
     
   getPaignationData(item:string){
-    this.userService.UsersPagination(item).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
+    this.Pagination.getPaginationData(item).pipe
+    (takeUntil(this.$subject)).
+    subscribe(res=> this.users.emit(res))
   }
 
 
   Previous(){
-    if (this.indecator == 0) {
-    this.indecator = 0
-    }else{
-      this.indecator = this.indecator - 1
+    if (!(this.indecator == 0)) {
+    this.minsOne()
     }
-    this.userService.UsersPagination(this.pages[this.indecator]).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
+    this.fetchPaginationData(this.pages[this.indecator])
   }
 
   next(){
-    if (this.indecator == this.usersResponse?.total_pages-1) {
-      this.indecator = this.usersResponse?.total_pages-1
-    }else{
-      this.indecator = this.indecator + 1
-      }
-      this.userService.UsersPagination(this.pages[this.indecator]).pipe(takeUntil(this.$subject)).subscribe(res=> this.users.emit(res))
-  
-  
+    if (!(this.indecator == this.usersResponse?.total_pages-1)) {
+    this.plusOne() 
     }
+    this.fetchPaginationData(this.pages[this.indecator])
+    }
+    
 
-      
+    fetchPaginationData(url:string){
+      this.Pagination.getPaginationData(url).
+      pipe(takeUntil(this.$subject)).
+      subscribe(res=> this.users.emit(res))
+    }
+  
+    plusOne(){
+      this.indecator += 1
+     } 
+ 
+    minsOne(){
+     this.indecator -= 1
+    }
+    
+     
   ngOnDestroy(): void {
     this.$subject.next(false)
     this.$subject.unsubscribe()
