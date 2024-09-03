@@ -1,18 +1,18 @@
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { IUserComponent } from './i-user.component';
+// import { UserNotFoundComponent } from './user-not-found.component';
 
-// describe('IUserComponent', () => {
-//   let component: IUserComponent;
-//   let fixture: ComponentFixture<IUserComponent>;
+// describe('UserNotFoundComponent', () => {
+//   let component: UserNotFoundComponent;
+//   let fixture: ComponentFixture<UserNotFoundComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [IUserComponent]
+//       imports: [UserNotFoundComponent]
 //     })
 //     .compileComponents();
 
-//     fixture = TestBed.createComponent(IUserComponent);
+//     fixture = TestBed.createComponent(UserNotFoundComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

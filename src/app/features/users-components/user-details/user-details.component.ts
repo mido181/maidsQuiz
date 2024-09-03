@@ -20,14 +20,22 @@ export class UserDetailsComponent  implements OnInit ,OnDestroy {
       private userService:UserService,
       private route:ActivatedRoute){}
   
-    ngOnInit(): void { this.getId() }
+    ngOnInit(): void { 
+      this.getId()
+     }
 
     getId(){
-      this.route.params.pipe(takeUntil(this.subject$)).subscribe(res=> this.getUserById(res['id']))
+      this.route.params
+      .pipe(
+        takeUntil(this.subject$)).
+        subscribe(res=> this.getUserById(res['id']))
     }
   
     getUserById(id:string){
-     this.userService.getUserById(id).pipe(takeUntil(this.subject$)).subscribe(res => this.user = res.data )
+     this.userService.getUserById(id).
+     pipe(
+      takeUntil(this.subject$)).
+      subscribe(res => this.user = res.data )
     }
   
     ngOnDestroy(): void {

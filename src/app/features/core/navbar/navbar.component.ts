@@ -17,12 +17,14 @@ export class NavbarComponent implements OnInit {
   userlist = false;
   searchVal = false;
   hideInput = new BehaviorSubject<boolean>(true);
+
   constructor( private userService:UserService ){}  
 
   ngOnInit(): void {
-  this.hideSearchInput()
+  this.hideSearchField()
   }
-  hideSearchInput(){
+
+  hideSearchField(){
     this.hideInput = this.userService.IsUserCompActive
   }
 

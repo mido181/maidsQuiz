@@ -12,7 +12,7 @@ import { SidebarComponent } from "./features/core/sidebar/sidebar.component";
 })
 
   export class AppComponent implements OnInit {
-    title = 'maidsTask';
+    title = 'maids-dashboard';
     
     ngOnInit(): void {
     }

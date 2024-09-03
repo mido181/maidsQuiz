@@ -4,7 +4,7 @@ import { Iuser, UsersResponse } from '../../../../app/interfaces/user-response.i
 import {  BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import { IUserComponent } from "../i-user/i-user.component";
 import { PaginationComponent } from "../../shared/pagination/pagination.component";
-import { UserNotFoundComponent } from "../../shared/user-not-found/user-not-found.component";
+import { UserNotFoundComponent } from "../../core/user-not-found/user-not-found.component";
 import { CacheService } from '../../../services/cache.service';
 
 @Component({
@@ -26,48 +26,65 @@ export class UserListComponent implements OnInit , OnDestroy {
  ){}
  
  ngOnInit(){
-   this.getUsers()
-   this.getId()
+  this.getUsers()
+  this.getId()
   this.hideSearchInput()
   }
-  
-  hideSearchInput(){
-   this.userService.IsUserCompActive.next(true)
-   }
-
   getId(){  
-     this.userService.id.pipe(takeUntil(this.subject$)).subscribe(res=>
-       this.filterUsers(res),
-        )}
+     this.userService.id.
+     pipe(
+      takeUntil(this.subject$)).
+      subscribe(res =>
+       this.checkId(res),
+        )
+      }
 
   getUsers(){
-    this.userService.allUsers().pipe(takeUntil(this.subject$)).subscribe(res=>{
-      this.usersResponse = res
-      this.users = this.usersResponse?.data
+    this.userService.allUsers()
+    .pipe(
+    takeUntil(this.subject$)).subscribe(res=>{
+    this.usersResponse = res
+    this.users = this.usersResponse?.data
       })
   }
 
-  filterUsers(id:number|null)
-  {
-    if (id === null || id === 0 ) {
-      this.users = this.usersResponse?.data
-      return this.users
-      }else{
-        this.users = [this.usersResponse?.data.find(user=> user.id == id)!]
-        if (this.users[0] == null) {
-          this.users = []
-        } 
-        return this.users
-      }
+ checkId(id:number|null) {
+   !this.isId(id) ? this.filterUsersById(id) : this.allUser()
+    
   }  
+  
+  
+  filterUsersById(id:number|null){
+    this.users = [this.usersResponse?.data.find(user=> user.id == id)!];
+    if(this.users[0] === undefined){
+    this.users = [] 
+    } 
+  }
+
+
+  allUser(){
+    this.users = this.usersResponse?.data
+    return this.users   
+  }
+
+
+  isId(id:number | null){
+  if ((id === null)||(id === 0)){
+      return true
+    }else{
+     return false
+    }
+  }
+
 
   dataByPagination(user:UsersResponse<Iuser[]>){
    this.users = user.data
   }
 
-  HideSearch(){
-      
+  hideSearchInput(){
+    this.userService.IsUserCompActive.next(true)
   }
+ 
   ngOnDestroy(): void {
     this.subject$.next(false)
     this.subject$.unsubscribe()
